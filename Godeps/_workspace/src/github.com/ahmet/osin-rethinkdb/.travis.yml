@@ -1,0 +1,19 @@
+language: go
+sudo: required
+go:
+  - 1.5
+  - tip
+notifications:
+  email:
+    - me@ahmetaygun.net
+before_install:
+  - source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
+  - wget -qO- http://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
+  - sudo apt-get update
+  - sudo apt-get install rethinkdb -y
+  - rethinkdb &
+  - go get github.com/axw/gocov/gocov
+  - go get github.com/mattn/goveralls
+  - if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
+script:
+  - $HOME/gopath/bin/goveralls -service=travis-ci
