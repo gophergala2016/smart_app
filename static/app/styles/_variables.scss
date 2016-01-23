@@ -1,0 +1,36 @@
+// Neat Overrides
+// $column: 90px;
+// $gutter: 30px;
+// $grid-columns: 12;
+// $max-width: em(1088);
+
+// Neat Breakpoints
+$medium-screen: em(640);
+$large-screen: em(860);
+
+$medium-screen-up: new-breakpoint(min-width $medium-screen 4);
+$large-screen-up: new-breakpoint(min-width $large-screen 8);
+
+$base-spacing: 1.5em;
+
+$white: #FFFFFF;
+$ghost: #FAFAFA;
+$snow: #F9F9F9;
+$vapor: #F6F6F6;
+$white-smoke: #F5F5F5;
+$silver: #EFEFEF;
+$smoke: #EEEEEE;
+$gainsboro: #DDDDDD;
+$iron: #CCCCCC;
+$base: #AAAAAA;
+$aluminum : #999999;
+$jumbo: #888888;
+$monsoon: #777777;
+$steel: #666666;
+$charcoal: #555555;
+$tuatara: #444444;
+$oil: #333333;
+$jet: #222222;
+$black: #000000;
+
+$font-family: 'Titillium Web', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
