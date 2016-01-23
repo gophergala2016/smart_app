@@ -63,3 +63,4 @@ dist/
 *.sublime-project
 *.sublime-workspace
 .env
+rethinkdb_data

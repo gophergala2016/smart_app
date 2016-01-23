@@ -2,7 +2,7 @@
 
 while read -r line
 do
-  export line
+  export $line
 done < <(cat .env)
 
 go run -- *.go

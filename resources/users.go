@@ -4,10 +4,7 @@ import (
 	"github.com/emicklei/go-restful"
 )
 
-type User struct {
-	Id uint64 `json:"id"`
-}
-
+type User struct{}
 type UserResource struct{}
 
 func (u UserResource) Register(container *restful.Container) {
