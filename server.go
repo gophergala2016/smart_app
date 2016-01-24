@@ -1,88 +1,80 @@
 package main
 
 import (
-	"./resources"
 	"fmt"
 	"github.com/RangelReale/osin"
-	"github.com/ahmet/osin-rethinkdb"
 	"github.com/emicklei/go-restful"
-	"github.com/honeybadger-io/honeybadger-go"
-	r "gopkg.in/dancannon/gorethink.v1"
+	"github.com/jmoiron/sqlx"
+	"github.com/ory-am/osin-storage/storage/postgres"
 	"log"
 	"net/http"
 	"os"
 )
 
-var (
-	server  *osin.Server
-	session *r.Session
-)
+type Server struct {
+	server *osin.Server
+	Host   string
+	Port   string
+}
 
-func main() {
-	defer honeybadger.Monitor()
-
-	initDb()
-
+func (s *Server) Start() {
 	config := osin.NewServerConfig()
 	config.ErrorStatusCode = 401
 
-	server = osin.NewServer(config, RethinkDBStorage.New(session))
+	url := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASS"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_NAME"),
+	)
+
+	db, err := sqlx.Open("postgres", url)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+
+	storage := postgres.New(db.DB)
+	s.server = osin.NewServer(config, storage)
 
 	wsContainer := restful.NewContainer()
 
-	r := resources.UserResource{}
-	r.Register(wsContainer)
+	r := UserResource{}
+	r.Register(wsContainer, db)
 
 	ws := new(restful.WebService)
 	ws.Route(ws.POST("/authorize").
 		Consumes("application/x-www-form-urlencoded").
-		To(authorize))
+		To(s.authorize))
 	wsContainer.Add(ws)
 
-	address := fmt.Sprintf("%s:%s", os.Getenv("HOST"), os.Getenv("PORT"))
-	log.Printf("listening on %s", address)
+	address := fmt.Sprintf("%s:%s", s.Host, s.Port)
+	log.Printf("Listening on %s", address)
 
-	log.Fatalln(http.ListenAndServe(address, honeybadger.Handler(wsContainer)))
+	log.Fatalln(http.ListenAndServe(address, wsContainer))
 }
 
-func initDb() {
-	address := fmt.Sprintf("%s:%s", os.Getenv("DB_HOST"), os.Getenv("DB_PORT"))
-
-	session, err := r.Connect(r.ConnectOpts{
-		Address:  address,
-		Database: os.Getenv("DB_NAME"),
-	})
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	_, err = r.DBCreate(os.Getenv("DB_NAME")).RunWrite(session)
-	if err != nil {
-		log.Println(err)
-	}
-}
-
-func authorize(req *restful.Request, res *restful.Response) {
-	nr := server.NewResponse()
+func (s *Server) authorize(req *restful.Request, res *restful.Response) {
+	nr := s.server.NewResponse()
 	defer nr.Close()
 
-	if ar := server.HandleAuthorizeRequest(nr, req.Request); ar != nil {
-		if !authenticate(ar, req, res) {
+	if ar := s.server.HandleAuthorizeRequest(nr, req.Request); ar != nil {
+		if !s.authenticate(ar, req, res) {
 			return
 		}
 
 		ar.Authorized = true
-		server.FinishAuthorizeRequest(nr, req.Request, ar)
+		s.server.FinishAuthorizeRequest(nr, req.Request, ar)
 	}
 
 	if nr.IsError && nr.InternalError != nil {
-		honeybadger.Notify(nr.InternalError)
+		log.Printf("ERROR: %s", nr.InternalError)
+		res.AddHeader("WWW-Authenticate", "Basic realm=Protected Area")
 	}
 
 	osin.OutputJSON(nr, res.ResponseWriter, req.Request)
 }
 
-func authenticate(ar *osin.AuthorizeRequest, req *restful.Request, res *restful.Response) bool {
+func (s *Server) authenticate(ar *osin.AuthorizeRequest, req *restful.Request, res *restful.Response) bool {
 	r := req.Request
 
 	r.ParseForm()
@@ -90,9 +82,6 @@ func authenticate(ar *osin.AuthorizeRequest, req *restful.Request, res *restful.
 	if r.Form.Get("username") == "test" && r.Form.Get("password") == "test" {
 		return true
 	}
-
-	res.AddHeader("WWW-Authenticate", "Basic realm=Protected Area")
-	res.WriteErrorString(http.StatusUnauthorized, "Not Authorized")
 
 	return false
 }

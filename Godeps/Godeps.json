@@ -15,27 +15,8 @@
 			"Rev": "446d1c146faa8ed3f4218f056fcd165f6bcfda81"
 		},
 		{
-			"ImportPath": "github.com/ahmet/osin-rethinkdb",
-			"Rev": "3fb2229e6f74127230faa3a8fcf92b460dd6f99c"
-		},
-		{
-			"ImportPath": "github.com/cenkalti/backoff",
-			"Rev": "4dc77674aceaabba2c7e3da25d4c823edfb73f99"
-		},
-		{
-			"ImportPath": "github.com/dancannon/gorethink/encoding",
-			"Comment": "v1.3.1",
-			"Rev": "6f088135ff288deb9d5546f4c71919207f891a70"
-		},
-		{
-			"ImportPath": "github.com/dancannon/gorethink/ql2",
-			"Comment": "v1.3.1",
-			"Rev": "6f088135ff288deb9d5546f4c71919207f891a70"
-		},
-		{
-			"ImportPath": "github.com/dancannon/gorethink/types",
-			"Comment": "v1.3.1",
-			"Rev": "6f088135ff288deb9d5546f4c71919207f891a70"
+			"ImportPath": "github.com/davecgh/go-spew/spew",
+			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
 		},
 		{
 			"ImportPath": "github.com/emicklei/go-restful",
@@ -43,12 +24,8 @@
 			"Rev": "ce94a9f819d7dd2b5599ff0c017b1124595a64fb"
 		},
 		{
-			"ImportPath": "github.com/golang/protobuf/proto",
-			"Rev": "5fc2294e655b78ed8a02082d37808d46c17d7e64"
-		},
-		{
-			"ImportPath": "github.com/hailocab/go-hostpool",
-			"Rev": "50839ee41f32bfca8d03a183031aa634b2dc1c64"
+			"ImportPath": "github.com/go-errors/errors",
+			"Rev": "a41850380601eeb43f4350f7d17c6bbd8944aaf8"
 		},
 		{
 			"ImportPath": "github.com/honeybadger-io/honeybadger-go",
@@ -56,12 +33,35 @@
 			"Rev": "edf0cba72f234eec7208a001f201d5d5e92d7c8b"
 		},
 		{
-			"ImportPath": "github.com/mitchellh/mapstructure",
-			"Rev": "281073eb9eb092240d33ef253c404f1cca550309"
+			"ImportPath": "github.com/jmoiron/sqlx",
+			"Comment": "sqlx-v1.1-53-g54aec3f",
+			"Rev": "54aec3fd91a2b2129ffaca0d652b8a9223ee2d9e"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Comment": "go1.0-cutoff-63-g11fc39a",
+			"Rev": "11fc39a580a008f1f39bb3d11d984fb34ed778d9"
+		},
+		{
+			"ImportPath": "github.com/oleiade/reflections",
+			"Comment": "0.1.2-2-g632977f",
+			"Rev": "632977f98cd34d217c4b57d0840ec188b3d3dcaf"
+		},
+		{
+			"ImportPath": "github.com/ory-am/common/pkg",
+			"Rev": "ab7ea9de49600d6aecab4a8e8f1abe532e67a1b9"
+		},
+		{
+			"ImportPath": "github.com/ory-am/osin-storage/storage/postgres",
+			"Rev": "3b2c85999821c67b5b34183603a4da5453052c8a"
 		},
 		{
 			"ImportPath": "github.com/pborman/uuid",
 			"Rev": "dee7705ef7b324f27ceb85a121c61f2c2e8ce988"
+		},
+		{
+			"ImportPath": "github.com/pmezard/go-difflib/difflib",
+			"Rev": "e8554b8641db39598be7f6342874b958f12ae1d4"
 		},
 		{
 			"ImportPath": "github.com/shirou/gopsutil/internal/common",
@@ -79,17 +79,26 @@
 			"Rev": "85bf0974ed06e4e668595ae2b4de02e772a2819b"
 		},
 		{
+			"ImportPath": "github.com/stretchr/testify/assert",
+			"Comment": "v1.0-88-ge3a8ff8",
+			"Rev": "e3a8ff8ce36581f87a15341206f205b1da467059"
+		},
+		{
+			"ImportPath": "github.com/stretchr/testify/require",
+			"Comment": "v1.0-88-ge3a8ff8",
+			"Rev": "e3a8ff8ce36581f87a15341206f205b1da467059"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/bcrypt",
+			"Rev": "f18420efc3b4f8e9f3d51f6bd2476e92c46260e9"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "f18420efc3b4f8e9f3d51f6bd2476e92c46260e9"
+		},
+		{
 			"ImportPath": "golang.org/x/sys/unix",
 			"Rev": "833a04a10549a95dc34458c195cbad61bbb6cb4d"
-		},
-		{
-			"ImportPath": "gopkg.in/dancannon/gorethink.v1",
-			"Comment": "v1.3.1",
-			"Rev": "6f088135ff288deb9d5546f4c71919207f891a70"
-		},
-		{
-			"ImportPath": "gopkg.in/fatih/pool.v2",
-			"Rev": "cba550ebf9bce999a02e963296d4bc7a486cb715"
 		}
 	]
 }
